@@ -6,22 +6,23 @@
 #    By: svereten <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 14:15:06 by svereten          #+#    #+#              #
-#    Updated: 2024/09/15 15:30:15 by svereten         ###   ########.fr        #
+#    Updated: 2024/09/15 16:07:15 by svereten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = fdf
 
 CC = cc
 
-MATHFLAGS = -lm
-MLXFLAGS = -lmlx -lXext -lX11
-CFLAGS = -Wall -Werror -Wextra ${MLXFLAGS} ${MATHFLAGS}
+MLXFLAGS = -L./minilibx-linux -lmlx -lXext -lX11 -lm
+CFLAGS = -Wall -Werror -Wextra 
 
 INCLUDE = -I./include -I./libft/include
 
 LIBFT = ./libft/libft.a
+MLX = ./minilibx-linux/libmlx.a
 
 LIBFT_DIR = libft
+MLX_DIR = minilibx-linux
 SRC_DIR = src
 OBJ_DIR = obj
 
@@ -34,13 +35,16 @@ OBJ_DIRS = ${sort ${dir ${OBJS}}}
 
 all: ${NAME}
 
-${NAME}: ${OBJS} ${LIBFT}
-	${CC} ${CFLAGS} ${INCLUDE} $^ -o $@
+${NAME}: ${OBJS} ${LIBFT} ${MLX}
+	${CC} ${CFLAGS} ${MLXFLAGS} ${MATHFLAGS} ${INCLUDE} $^ -o $@
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c | ${OBJ_DIRS}
 	${CC} ${CFLAGS} ${INCLUDE} -c $< -o $@
 
 ${LIBFT}:
+	${MAKE} -C ${LIBFT_DIR}
+
+${MLX}:
 	${MAKE} -C ${LIBFT_DIR}
 
 ${OBJ_DIRS}:
