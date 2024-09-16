@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 23:55:51 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/16 00:32:16 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:05:56 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -18,6 +18,7 @@
 typedef	enum	e_option
 {
 	GET,
+	FREE,
 	EXIT,
 }	t_option;
 
@@ -46,5 +47,7 @@ typedef struct	s_data
 }	t_data;
 
 t_data	*data(t_option op);
+
+void	panic(int status);
 
 #endif

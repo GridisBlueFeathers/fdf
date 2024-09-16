@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/16 00:58:24 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:14:58 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -78,11 +78,12 @@ t_data	*data(t_option op)
 			data = data_init();
 		return (data);
 	}
-	if (op == EXIT)
+	if (op == FREE)
 	{
+		if (!data)
+			return (NULL);
 		data_free();
 		data = NULL;
-		exit (0);
 	}
 	return (data);
 }
@@ -95,13 +96,13 @@ int	main(int argc, char **argv)
 		return (1);
 	int	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		return (1);
+		panic(1);
 	char *line = get_next_line(fd);
 	if (!line)
-		return (1);
+		panic(1);
 	char **line_split = ft_split(line, ' ');
 	if (!line_split)
-		return (1);
+		panic(1);
 	if (!data(GET)->width)
 		data(GET)->width = ft_strarrlen(line_split);
 

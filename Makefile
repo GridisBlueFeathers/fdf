@@ -6,7 +6,7 @@
 #    By: svereten <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 14:15:06 by svereten          #+#    #+#              #
-#    Updated: 2024/09/15 16:07:15 by svereten         ###   ########.fr        #
+#    Updated: 2024/09/16 10:04:11 by svereten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = fdf
@@ -26,7 +26,9 @@ MLX_DIR = minilibx-linux
 SRC_DIR = src
 OBJ_DIR = obj
 
-FILES = main
+FILES = main \
+		panic \
+		data \
 
 SRCS = ${FILES:%=${SRC_DIR}/%.c}
 OBJS = ${FILES:%=${OBJ_DIR}/%.o}
