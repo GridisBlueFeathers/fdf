@@ -6,12 +6,61 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/16 17:42:57 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/17 00:41:01 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
 #include "dev.h"
+#include "libft/ft_printf.h"
 
+void	point_process(char *line)
+{
+	int	i;
+	int	commas;
+	int	comma_loc;
+	int	z_coord;
+	char *itoa_res;
+
+	i = 0;
+	commas = 0;
+	while (line[i] && line[i] != ' ')
+	{
+		if (line[i] == ',')
+		{
+			commas++;
+			comma_loc = i;
+		}
+		if (line[i] == '\n')
+			break ;
+		i++;
+	}
+	if (!commas)
+	{
+		z_coord = ft_atoi(line);
+		itoa_res = ft_itoa(z_coord);
+		if (!itoa_res || ft_strncmp(itoa_res, line, i))
+		{
+			ft_dprintf(2, "z coordinate overflew\n");
+			panic(1);
+		}
+		point_append();
+		data(GET)->tail_l->tail_p->z = z_coord;
+	}
+	if (commas == 1)
+	{
+		z_coord = ft_atoi(line);
+		itoa_res = ft_itoa(z_coord);
+		if (!itoa_res || ft_strncmp(itoa_res, line, comma_loc))
+		{
+			ft_dprintf(2, "z coordinate overflew\n");
+			panic(1);
+		}
+		point_append();
+		data(GET)->tail_l->tail_p->z = z_coord;
+	}
+	if (commas >= 2)
+		panic(1);
+}
 
 int	main(int argc, char **argv)
 {
@@ -24,16 +73,14 @@ int	main(int argc, char **argv)
 	if (fd == -1)
 		panic(1);
 	char *line;
-	char **point_split;
 	int	check;
 	int	i;
-	t_point	*point;
 
 	check = 1;
 	line = "";
-	while (check && line)
+	while (check)
 	{
-		printf("start\n");
+		ft_printf("start\n");
 		check = get_next_line(fd, &line, 0);
 		if (!check)
 		{
@@ -42,7 +89,18 @@ int	main(int argc, char **argv)
 		}
 		if (!line)
 			break ;
-		char **line_split = ft_split(line, ' ');
+		line_append();
+		i = 0;
+		while(line[i])
+		{
+			while(line[i] && line[i] == ' ')
+				i++;
+			point_process(&line[i]);
+			while(line[i] && line[i] != ' ')
+				i++;
+		}
+
+		/*char **line_split = ft_split(line, ' ');
 		if (!line_split)
 			panic(1);
 		if (!data(GET)->width)
@@ -53,7 +111,6 @@ int	main(int argc, char **argv)
 			panic_silent(1);
 		}
 		i = 0;
-		line_append();
 		while (line_split[i])
 		{
 			if (line_split[i] && !line_split[i + 1])
@@ -68,11 +125,11 @@ int	main(int argc, char **argv)
 			if (!ft_atoi_check(point_split[0], &point->z))
 				panic(1);
 			i++;
-		}
+		}*/
 
 
 		free(line);
-		ft_free(STR_ARR, &line_split);
+		//ft_free(STR_ARR, &line_split);
 		printf("finish\n");
 	}
 	dev_put_lines(Z);
