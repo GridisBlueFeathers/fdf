@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 23:55:51 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/16 11:52:49 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:43:07 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -28,7 +28,7 @@ typedef	enum	e_option
 
 typedef struct	s_point
 {
-	struct s_point	*next;
+	struct s_point	*next_p;
 	int				x;
 	int				y;
 	int				z;
@@ -36,22 +36,31 @@ typedef struct	s_point
 
 }	t_point;
 
+void	point_append(void);
+
 typedef struct	s_line
 {
-	struct s_line	*next;
-	t_point			*head;
-	t_point			*tail;
+	int				y;
+	struct s_line	*next_l;
+	t_point			*head_p;
+	t_point			*tail_p;
 }	t_line;
+
+void	line_free(t_line *line);
+void	line_append(void);
 
 typedef struct	s_data
 {
 	size_t	width;
 	size_t	height;
-	t_line	*head;
-	t_line	*tail;
+	t_line	*head_l;
+	t_line	*tail_l;
 }	t_data;
 
+int	init_check_file_extension(char *filename);
+
 t_data	*data(t_option op);
+
 
 void	panic(int status);
 void	panic_silent(int status);
