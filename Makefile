@@ -6,7 +6,7 @@
 #    By: svereten <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 14:15:06 by svereten          #+#    #+#              #
-#    Updated: 2024/09/16 16:38:00 by svereten         ###   ########.fr        #
+#    Updated: 2024/09/18 00:37:56 by svereten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = fdf
@@ -29,6 +29,7 @@ OBJ_DIR = obj
 FILES = main \
 		panic \
 		data \
+		p_data \
 		line \
 		init \
 		point \
@@ -39,7 +40,7 @@ OBJS = ${FILES:%=${OBJ_DIR}/%.o}
 OBJ_DIRS = ${sort ${dir ${OBJS}}}
 
 DEV_NAME = fdf_dev
-DEV_FLAGS = -g
+CFLAGS += -g
 DEV_FILES = dev
 DEV_OBJS = ${OBJS} ${DEV_FILES:%=${OBJ_DIR}/%.o}
 

@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 23:55:51 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/16 16:43:07 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/18 00:52:20 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -57,10 +57,17 @@ typedef struct	s_data
 	t_line	*tail_l;
 }	t_data;
 
-int	init_check_file_extension(char *filename);
-
 t_data	*data(t_option op);
 
+typedef struct	s_p_data
+{
+	int		fd;
+	char	*gnl_line;
+}	t_p_data;
+
+t_p_data	*p_data(t_option op);
+
+int	init_check_file_extension(char *filename);
 
 void	panic(int status);
 void	panic_silent(int status);

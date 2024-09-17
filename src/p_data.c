@@ -1,62 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data.c                                             :+:      :+:    :+:   */
+/*   p_data.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/16 10:03:52 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/17 23:54:32 by svereten         ###   ########.fr       */
+/*   Created: 2024/09/18 00:03:27 by svereten          #+#    #+#             */
+/*   Updated: 2024/09/18 00:55:07 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
 
-static t_data	*data_init(void)
+static t_p_data	*p_data_init(void)
 {
-	t_data	*data;
+	t_p_data	*data;
 
-	data = (t_data *)ft_calloc(1, sizeof(t_data));
+	data = (t_p_data *)ft_calloc(1, sizeof(t_p_data));
 	if (!data)
-		exit(1);
+		panic(1);
+	data->gnl_line = NULL;
 	return (data);
 }
 
-static void	data_free(t_data *data)
+static void	p_data_free(t_p_data *data)
 {
-	t_line	*line_cur;
-	t_line	*line_tmp;
-
-	line_cur = data->head_l;
-	while (line_cur)
-	{
-		line_tmp = line_cur->next_l;
-		line_free(line_cur);
-		line_cur = line_tmp;
-	}
+	close(data->fd);
+	get_next_line(data->fd, NULL, 1);
+	free(data->gnl_line);
 	free(data);
 }
 
-t_data	*data(t_option op)
+t_p_data	*p_data(t_option op)
 {
-	static t_data	*data;
+	static t_p_data	*data;
 	if (op == GET)
 	{
 		if (!data)
-			data = data_init();
+			data = p_data_init();
 		return (data);
 	}
 	if (op == FREE)
 	{
 		if (!data)
 			return (NULL);
-		data_free(data);
+		p_data_free(data);
 		data = NULL;
 	}
-	if (op == EXIT)
-	{
-		data_free(data);
-		data = NULL;
-		exit(0);
-	}
-	return (data);
+	return (NULL);
 }
