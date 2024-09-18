@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/18 01:00:56 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:30:24 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -99,10 +99,8 @@ int	main(int argc, char **argv)
 				i++;
 		}
 
-		free(p_data(GET)->gnl_line);
-		p_data(GET)->gnl_line = NULL;
-		//ft_free(STR, &(p_data(GET)->gnl_line));
-		//ft_free(STR_ARR, &line_split);
+		p_data_free_gnl();
+		printf("%p\n", p_data(GET)->gnl_line);
 		printf("finish\n");
 	}
 	dev_put_lines(Z);
@@ -110,5 +108,6 @@ int	main(int argc, char **argv)
 	if (!mlx_new_window(mlx, 800, 500, "yo wtf"))
 		return (1);*/
 	printf("hello\n");
+	p_data(FREE);
 	data(EXIT);
 }

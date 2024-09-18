@@ -6,7 +6,7 @@
 #    By: svereten <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 14:15:06 by svereten          #+#    #+#              #
-#    Updated: 2024/09/18 00:37:56 by svereten         ###   ########.fr        #
+#    Updated: 2024/09/18 11:02:14 by svereten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = fdf
@@ -64,7 +64,12 @@ ${OBJ_DIRS}:
 ${DEV_NAME}: ${DEV_OBJS} ${LIBFT} ${MLX}
 	${CC} ${CFLAGS} ${DEV_FLAGS} ${LIBFT} ${MLXFLAGS} ${INCLUDE} $^ -o $@
 
+print:
+	echo ${DEV_OBJS}
+
 dev: ${DEV_NAME}
+
+fdev: fclean ${DEV_NAME}
 
 clean: 
 	rm -rf obj
