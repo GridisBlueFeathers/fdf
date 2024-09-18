@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/18 14:38:57 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:01:09 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -15,7 +15,7 @@
 
 void	point_process_no_comma(char *line, int len)
 {
-	int	z_coord;
+	int		z;
 	char	num[12];
 
 	if (len > 11 || (len > 10 && line[0] != '-'))
@@ -25,10 +25,10 @@ void	point_process_no_comma(char *line, int len)
 		panic(1);
 	if ((len == 11 && ft_strcmp("-2147483648", num) < 0)
 		|| (len == 10 && ft_strcmp("2147483647", num) < 0))
-		panic(1);
-	z_coord = ft_atoi(line);
+		panic_msg(1, "fdf: one of the numbers will over/underflow\n");
+	z = ft_atoi(line);
 	point_append();
-	data(GET)->tail_l->tail_p->z = z_coord;
+	data(GET)->tail_l->tail_p->z = z;
 }
 
 void	point_process(char *line)
@@ -60,45 +60,56 @@ void	point_process(char *line)
 		panic(1);
 }
 
-int	main(int argc, char **argv)
+void	map_open(void)
 {
-	void *mlx;
-	(void)mlx;
-	(void)argv;
-	if (argc != 2 || !init_check_file_extension(argv[1]))
-		return (1);
-	p_data(GET)->fd = open(argv[1], O_RDONLY);
+	p_data(GET)->fd = open(p_data(GET)->argv[1], O_RDONLY);
 	if (p_data(GET)->fd == -1)
 		panic(1);
+}
+
+void	map_parse(void)
+{
 	int	check;
 	int	i;
-	//static int count = 0;
 
 	check = 1;
 	while (check)
 	{
-		ft_printf("start\n");
 		check = get_next_line(p_data(GET)->fd, &p_data(GET)->gnl_line, 0);
-		if (!check) {
+		if (!check)
 			panic(1);
-		}
 		if (!p_data(GET)->gnl_line)
 			break ;
 		line_append();
 		i = 0;
-		while(p_data(GET)->gnl_line[i])
+		while (p_data(GET)->gnl_line[i])
 		{
-			while(p_data(GET)->gnl_line[i] && p_data(GET)->gnl_line[i] == ' ')
+			while (p_data(GET)->gnl_line[i] && p_data(GET)->gnl_line[i] == ' ')
 				i++;
 			point_process(&p_data(GET)->gnl_line[i]);
-			while(p_data(GET)->gnl_line[i] && p_data(GET)->gnl_line[i] != ' ')
+			while (p_data(GET)->gnl_line[i] && p_data(GET)->gnl_line[i] != ' ')
 				i++;
 		}
-
 		ft_free(STR, &p_data(GET)->gnl_line);
-		printf("%p\n", p_data(GET)->gnl_line);
-		printf("finish\n");
 	}
+}
+
+void	map_process(void)
+{
+	map_open();
+	map_parse();
+}
+
+int	main(int argc, char **argv)
+{
+	void	*mlx;
+
+	(void)mlx;
+	(void)argv;
+	if (argc != 2 || !init_check_file_extension(argv[1]))
+		return (1);
+	p_data(GET)->argv = argv;
+	map_process();
 	dev_put_lines(Z);
 	/*mlx = mlx_init();
 	if (!mlx_new_window(mlx, 800, 500, "yo wtf"))

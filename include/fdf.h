@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 23:55:51 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/18 11:30:10 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/18 14:52:36 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -40,7 +40,7 @@ void	point_append(void);
 
 typedef struct	s_line
 {
-	int				y;
+	size_t			width;
 	struct s_line	*next_l;
 	t_point			*head_p;
 	t_point			*tail_p;
@@ -63,6 +63,7 @@ typedef struct	s_p_data
 {
 	int		fd;
 	char	*gnl_line;
+	char	**argv;
 }	t_p_data;
 
 t_p_data	*p_data(t_option op);
@@ -71,6 +72,7 @@ void		p_data_free_gnl(void);
 int	init_check_file_extension(char *filename);
 
 void	panic(int status);
+void	panic_msg(int status, char *msg);
 void	panic_silent(int status);
 
 #endif

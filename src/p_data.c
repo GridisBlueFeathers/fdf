@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 00:03:27 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/18 14:06:40 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:01:35 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -40,6 +40,7 @@ static void	p_data_free(t_p_data *data)
 t_p_data	*p_data(t_option op)
 {
 	static t_p_data	*data;
+
 	if (op == GET)
 	{
 		if (!data)
