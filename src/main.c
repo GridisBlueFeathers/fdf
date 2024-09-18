@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/18 11:30:24 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/18 14:38:57 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -72,20 +72,16 @@ int	main(int argc, char **argv)
 		panic(1);
 	int	check;
 	int	i;
-	static int count = 0;
+	//static int count = 0;
 
 	check = 1;
 	while (check)
 	{
 		ft_printf("start\n");
-		if (count != 1) {
-			check = get_next_line(p_data(GET)->fd, &p_data(GET)->gnl_line, 0);
-			count++;
-		} else {
-			check = 0;
-		}
-		if (!check)
+		check = get_next_line(p_data(GET)->fd, &p_data(GET)->gnl_line, 0);
+		if (!check) {
 			panic(1);
+		}
 		if (!p_data(GET)->gnl_line)
 			break ;
 		line_append();
@@ -99,7 +95,7 @@ int	main(int argc, char **argv)
 				i++;
 		}
 
-		p_data_free_gnl();
+		ft_free(STR, &p_data(GET)->gnl_line);
 		printf("%p\n", p_data(GET)->gnl_line);
 		printf("finish\n");
 	}
