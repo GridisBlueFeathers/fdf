@@ -6,14 +6,14 @@
 #    By: svereten <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 14:15:06 by svereten          #+#    #+#              #
-#    Updated: 2024/09/18 11:02:14 by svereten         ###   ########.fr        #
+#    Updated: 2024/09/19 15:42:23 by svereten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = fdf
 
 CC = cc
 
-MLXFLAGS = -L./minilibx-linux -lmlx -lXext -lX11 -lm
+MLXFLAGS = -lmlx -lXext -lX11 -lm
 CFLAGS = -Wall -Werror -Wextra 
 
 INCLUDE = -I./include -I./libft/include
@@ -46,8 +46,8 @@ DEV_OBJS = ${OBJS} ${DEV_FILES:%=${OBJ_DIR}/%.o}
 
 all: ${NAME}
 
-${NAME}: ${OBJS} ${LIBFT} ${MLX}
-	${CC} ${CFLAGS} ${MLXFLAGS} ${MATHFLAGS} ${INCLUDE} $^ -o $@
+${NAME}: ${OBJS} ${LIBFT}
+	${CC} ${CFLAGS} ${MLXFLAGS} ${INCLUDE} $^ -o $@
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c | ${OBJ_DIRS}
 	${CC} ${CFLAGS} ${INCLUDE} -c $< -o $@

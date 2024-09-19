@@ -6,14 +6,15 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/18 15:01:09 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/19 15:42:47 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <mlx.h>
 #include "fdf.h"
 #include "dev.h"
 #include "libft/ft_printf.h"
 
-void	point_process_no_comma(char *line, int len)
+/*void	point_process_no_comma(char *line, int len)
 {
 	int		z;
 	char	num[12];
@@ -98,6 +99,62 @@ void	map_process(void)
 {
 	map_open();
 	map_parse();
+}*/
+
+void	get_height(void)
+{
+	int		fd;
+	char	*line;
+
+	fd = open(data(GET)->argv[1], O_RDONLY);
+	if (fd == -1)
+		panic(1);
+	line = "";
+	while (line)
+	{
+		if (!get_next_line(fd, &line))
+		{
+			get_next_line(fd, NULL);
+			panic(1);
+		}
+		if (line)
+			data(GET)->height++;
+		free(line);
+	}
+	close(fd);
+}
+
+void	get_width(void)
+{
+	int		fd;
+	char	*line;
+
+	fd = open(data(GET)->argv[1], O_RDONLY);
+	if (fd == -1)
+		panic(1);
+	if (!get_next_line(fd, &line))
+		panic(1);
+	data(GET)->width = ft_count_words(line, ' ');
+	get_next_line(fd, NULL);
+	free(line);
+	close(fd);
+}
+
+void	matrix_feed(void)
+{
+	size_t	i;
+	int		fd;
+	char	*line;
+
+	(void)line;
+	fd = open(data(GET)->argv[1], O_RDONLY);
+	if (fd == -1)
+		panic(1);
+	i = 0;
+	while (i < data(GET)->height)
+	{
+
+	}
 }
 
 int	main(int argc, char **argv)
@@ -108,13 +165,18 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc != 2 || !init_check_file_extension(argv[1]))
 		return (1);
-	p_data(GET)->argv = argv;
-	map_process();
-	dev_put_lines(Z);
-	/*mlx = mlx_init();
+	/*data(GET)->argv = argv;
+	get_height();
+	data(GET)->matrix = (int **)ft_calloc(data(GET)->height, sizeof(int *));
+	if (!data(GET)->matrix)
+		panic(1);
+	get_width();*/
+	mlx = mlx_init();
 	if (!mlx_new_window(mlx, 800, 500, "yo wtf"))
-		return (1);*/
-	printf("hello\n");
-	p_data(FREE);
+		return (1);
+	while (1)
+	{
+
+	}
 	data(EXIT);
 }
