@@ -6,7 +6,7 @@
 #    By: svereten <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 14:15:06 by svereten          #+#    #+#              #
-#    Updated: 2024/09/20 15:09:12 by svereten         ###   ########.fr        #
+#    Updated: 2024/09/20 18:39:00 by svereten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = fdf
@@ -30,10 +30,11 @@ FILES = main \
 		panic \
 		data \
 		p_data \
-		line \
 		init \
-		point \
 		matrix \
+		fdf_mlx \
+		hooks \
+		img \
 
 SRCS = ${FILES:%=${SRC_DIR}/%.c}
 OBJS = ${FILES:%=${OBJ_DIR}/%.o}

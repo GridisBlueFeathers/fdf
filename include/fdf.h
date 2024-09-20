@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 23:55:51 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/20 15:30:47 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:37:59 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -29,34 +29,25 @@ typedef	enum	e_option
 	EXIT,
 }	t_option;
 
-typedef struct	s_point
+typedef	struct	s_img
 {
-	struct s_point	*next_p;
-	int				x;
-	int				y;
-	int				z;
-	int				color;
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_img;
 
-}	t_point;
-
-void	point_append(void);
-
-typedef struct	s_line
-{
-	size_t			width;
-	struct s_line	*next_l;
-	t_point			*head_p;
-	t_point			*tail_p;
-}	t_line;
-
-void	line_free(t_line *line);
-void	line_append(void);
+void	img_init(void);
 
 typedef struct	s_data
 {
 	size_t	width;
 	size_t	height;
 	size_t	actual_height;
+	t_img	img;
+	void	*mlx;
+	void	*mlx_win;
 	int		**matrix;
 	int		**color;
 }	t_data;
@@ -75,7 +66,12 @@ typedef struct	s_p_data
 
 t_p_data	*p_data(t_option op);
 
-int	init_check_file_extension(char *filename);
+int		init_check_file_extension(char *filename);
+
+void	fdf_mlx_init();
+int		hook_key(int key, void	*ptr);
+int		hook_close(void	*ptr);
+int		hook_idle(void	*ptr);
 
 void	panic(int status);
 void	panic_msg(int status, char *msg);
