@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:32:46 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/18 15:10:23 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:26:59 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -27,7 +27,7 @@ void	line_free(t_line *line)
 	free(line);
 }
 
-void	line_append(void)
+/*void	line_append(void)
 {
 	t_line	*tail;
 
@@ -47,4 +47,4 @@ void	line_append(void)
 	if (!tail->next_l)
 		panic(1);
 	data(GET)->tail_l = tail->next_l;
-}
+}*/

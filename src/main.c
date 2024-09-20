@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/19 17:41:00 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:08:15 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -14,203 +14,6 @@
 #include "dev.h"
 #include "libft/ft_printf.h"
 
-/*void	point_process_no_comma(char *line, int len)
-{
-	int		z;
-	char	num[12];
-
-	if (len > 11 || (len > 10 && line[0] != '-'))
-		panic(1);
-	ft_strlcpy(num, line, len + 1);
-	if (!ft_isnumber(num))
-		panic(1);
-	if ((len == 11 && ft_strcmp("-2147483648", num) < 0)
-		|| (len == 10 && ft_strcmp("2147483647", num) < 0))
-		panic_msg(1, "fdf: one of the numbers will over/underflow\n");
-	z = ft_atoi(line);
-	point_append();
-	data(GET)->tail_l->tail_p->z = z;
-}
-
-void	point_process(char *line)
-{
-	int	line_len;
-	int	commas;
-	int	comma_loc;
-
-	line_len = 0;
-	commas = 0;
-	while (line[line_len] && line[line_len] != ' ')
-	{
-		if (line[line_len] == ',')
-		{
-			commas++;
-			comma_loc = line_len;
-		}
-		if (line[line_len] == '\n')
-			break ;
-		line_len++;
-	}
-	if (!commas)
-		point_process_no_comma(line, line_len);
-	if (commas == 1)
-	{
-		point_process_no_comma(line, comma_loc);
-	}
-	if (commas >= 2)
-		panic(1);
-}
-
-void	map_open(void)
-{
-	p_data(GET)->fd = open(p_data(GET)->argv[1], O_RDONLY);
-	if (p_data(GET)->fd == -1)
-		panic(1);
-}
-
-void	map_parse(void)
-{
-	int	check;
-	int	i;
-
-	check = 1;
-	while (check)
-	{
-		check = get_next_line(p_data(GET)->fd, &p_data(GET)->gnl_line, 0);
-		if (!check)
-			panic(1);
-		if (!p_data(GET)->gnl_line)
-			break ;
-		line_append();
-		i = 0;
-		while (p_data(GET)->gnl_line[i])
-		{
-			while (p_data(GET)->gnl_line[i] && p_data(GET)->gnl_line[i] == ' ')
-				i++;
-			point_process(&p_data(GET)->gnl_line[i]);
-			while (p_data(GET)->gnl_line[i] && p_data(GET)->gnl_line[i] != ' ')
-				i++;
-		}
-		ft_free(STR, &p_data(GET)->gnl_line);
-	}
-}
-
-void	map_process(void)
-{
-	map_open();
-	map_parse();
-}*/
-
-void	get_height(void)
-{
-	int		fd;
-	char	*line;
-
-	fd = open(data(GET)->argv[1], O_RDONLY);
-	if (fd == -1)
-		panic(1);
-	line = "";
-	while (line)
-	{
-		if (!get_next_line(fd, &line))
-		{
-			get_next_line(fd, NULL);
-			panic(1);
-		}
-		if (line)
-			data(GET)->height++;
-		free(line);
-	}
-	close(fd);
-}
-
-void	get_width(void)
-{
-	int		fd;
-	char	*line;
-
-	data(GET)->fd = open(data(GET)->argv[1], O_RDONLY);
-	if (fd == -1)
-		panic(1);
-	if (!get_next_line(data(GET)->fd, &line))
-		panic(1);
-	data(GET)->width = ft_count_words(line, ' ');
-	get_next_line(data(GET)->fd, NULL);
-	free(line);
-	close(data(GET)->fd);
-}
-
-void	matrix_feed_line(char *line, int i)
-{
-	char	**split_line;
-	size_t	j;
-
-	split_line = ft_split(line, ' ');
-	if (!split_line)
-		panic(1);
-	data(GET)->matrix[i] = (int	*)ft_calloc(data(GET)->width, sizeof(int));
-	if (!data(GET)->matrix[i])
-		panic(1);
-	j = 0;
-	while (split_line[j])
-	{
-		if (j < data(GET)->width)
-			data(GET)->matrix[i][j] = ft_atoi(split_line[j]);
-		j++;
-	}
-	if (j != data(GET)->width)
-		panic_msg(1, INV_MAP);
-	ft_free(STR_ARR, &split_line);
-}
-
-void	matrix_feed(void)
-{
-	size_t	i;
-	int		fd;
-	char	*line;
-
-	fd = open(data(GET)->argv[1], O_RDONLY);
-	if (fd == -1)
-		panic(1);
-	i = 0;
-	line = "";
-	while (line)
-	{
-		if(!get_next_line(fd, &line))
-		{
-			get_next_line(fd, NULL);
-			panic(1);
-		}
-		if (!line)
-			break ;
-		if (!data(GET)->width)
-			data(GET)->width = ft_count_words(line, ' ');
-		else if (ft_count_words(line, ' ') != data(GET)->width)
-			panic(1);
-		matrix_feed_line(line, i);
-		free(line);
-		i++;
-	}
-}
-
-void	matrix_print(void)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	while (i < data(GET)->height)
-	{
-		j = 0;
-		while (j < data(GET)->width)
-		{
-			printf("%3d ", data(GET)->matrix[i][j]);
-			j++;
-		}
-		i++;
-		printf("\n");
-	}
-}
 
 int	main(int argc, char **argv)
 {
@@ -220,14 +23,10 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc != 2 || !init_check_file_extension(argv[1]))
 		return (1);
-	data(GET)->argv = argv;
-	get_height();
-	data(GET)->matrix = (int **)ft_calloc(data(GET)->height, sizeof(int *));
-	if (!data(GET)->matrix)
-		panic(1);
-	get_width();
-	matrix_feed();
-	matrix_print();
+	data(GET);
+	p_data(GET)->argv = argv;
+	matrix_process();
+	dev_matrix_print();
 	/*mlx = mlx_init();
 	if (!mlx_new_window(mlx, 800, 500, "yo wtf"))
 		return (1);
@@ -235,5 +34,6 @@ int	main(int argc, char **argv)
 	{
 
 	}*/
+	p_data(FREE);
 	data(EXIT);
 }

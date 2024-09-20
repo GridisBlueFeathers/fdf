@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 00:03:27 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/19 10:39:57 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:46:23 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -18,22 +18,17 @@ static t_p_data	*p_data_init(void)
 	data = (t_p_data *)ft_calloc(1, sizeof(t_p_data));
 	if (!data)
 		panic(1);
-	data->gnl_line = NULL;
 	return (data);
-}
-
-void	p_data_free_gnl(void)
-{
-	free(p_data(GET)->gnl_line);
-	p_data(GET)->gnl_line = NULL;
 }
 
 static void	p_data_free(t_p_data *data)
 {
-	close(data->fd);
 	get_next_line(data->fd, NULL);
-	if (data->gnl_line)
-		p_data_free_gnl();
+	close(data->fd);
+	if (data->split_line)
+		ft_free(STR_ARR, &data->split_line);
+	if (data->line)
+		free(data->line);
 	free(data);
 }
 

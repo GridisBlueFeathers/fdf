@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:03:52 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/19 17:41:33 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:26:28 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -36,7 +36,6 @@ static void	data_free(t_data *data)
 		i++;
 	}
 	free(data->matrix);
-	get_next_line(data->fd, NULL);
 	free(data);
 }
 

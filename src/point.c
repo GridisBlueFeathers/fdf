@@ -6,12 +6,12 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:36:30 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/18 14:45:50 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:27:24 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
 
-void	point_append(void)
+/*void	point_append(void)
 {
 	t_line	*line;
 
@@ -34,4 +34,4 @@ void	point_append(void)
 	line->tail_p->next_p->x = line->tail_p->x + 1;
 	line->tail_p->next_p->color = 16777215;
 	line->tail_p = line->tail_p->next_p;
-}
+}*/
