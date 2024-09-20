@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 23:55:51 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/20 15:07:06 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:30:47 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -56,6 +56,7 @@ typedef struct	s_data
 {
 	size_t	width;
 	size_t	height;
+	size_t	actual_height;
 	int		**matrix;
 	int		**color;
 }	t_data;

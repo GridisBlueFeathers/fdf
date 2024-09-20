@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:05:26 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/20 15:07:32 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:42:02 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -44,6 +44,7 @@ static void	matrix_feed_line(char *line, int i)
 	data(GET)->matrix[i] = (int	*)ft_calloc(data(GET)->width, sizeof(int));
 	if (!data(GET)->matrix[i])
 		panic(1);
+	data(GET)->actual_height++;
 	j = 0;
 	while (p_data(GET)->split_line[j])
 	{
