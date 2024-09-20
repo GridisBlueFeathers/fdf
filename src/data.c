@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:03:52 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/18 15:01:26 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:41:33 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -23,18 +23,20 @@ static t_data	*data_init(void)
 
 static void	data_free(t_data *data)
 {
-	t_line	*line_cur;
-	t_line	*line_tmp;
+	size_t	i;
 
 	if (!data)
 		return ;
-	line_cur = data->head_l;
-	while (line_cur)
+	i = 0;
+
+	while (data->matrix && i < data->height)
 	{
-		line_tmp = line_cur->next_l;
-		line_free(line_cur);
-		line_cur = line_tmp;
+		if (data->matrix)
+			free(data->matrix[i]);
+		i++;
 	}
+	free(data->matrix);
+	get_next_line(data->fd, NULL);
 	free(data);
 }
 

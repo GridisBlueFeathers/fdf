@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/19 15:42:47 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:41:00 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -129,15 +129,38 @@ void	get_width(void)
 	int		fd;
 	char	*line;
 
-	fd = open(data(GET)->argv[1], O_RDONLY);
+	data(GET)->fd = open(data(GET)->argv[1], O_RDONLY);
 	if (fd == -1)
 		panic(1);
-	if (!get_next_line(fd, &line))
+	if (!get_next_line(data(GET)->fd, &line))
 		panic(1);
 	data(GET)->width = ft_count_words(line, ' ');
-	get_next_line(fd, NULL);
+	get_next_line(data(GET)->fd, NULL);
 	free(line);
-	close(fd);
+	close(data(GET)->fd);
+}
+
+void	matrix_feed_line(char *line, int i)
+{
+	char	**split_line;
+	size_t	j;
+
+	split_line = ft_split(line, ' ');
+	if (!split_line)
+		panic(1);
+	data(GET)->matrix[i] = (int	*)ft_calloc(data(GET)->width, sizeof(int));
+	if (!data(GET)->matrix[i])
+		panic(1);
+	j = 0;
+	while (split_line[j])
+	{
+		if (j < data(GET)->width)
+			data(GET)->matrix[i][j] = ft_atoi(split_line[j]);
+		j++;
+	}
+	if (j != data(GET)->width)
+		panic_msg(1, INV_MAP);
+	ft_free(STR_ARR, &split_line);
 }
 
 void	matrix_feed(void)
@@ -146,14 +169,46 @@ void	matrix_feed(void)
 	int		fd;
 	char	*line;
 
-	(void)line;
 	fd = open(data(GET)->argv[1], O_RDONLY);
 	if (fd == -1)
 		panic(1);
 	i = 0;
+	line = "";
+	while (line)
+	{
+		if(!get_next_line(fd, &line))
+		{
+			get_next_line(fd, NULL);
+			panic(1);
+		}
+		if (!line)
+			break ;
+		if (!data(GET)->width)
+			data(GET)->width = ft_count_words(line, ' ');
+		else if (ft_count_words(line, ' ') != data(GET)->width)
+			panic(1);
+		matrix_feed_line(line, i);
+		free(line);
+		i++;
+	}
+}
+
+void	matrix_print(void)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
 	while (i < data(GET)->height)
 	{
-
+		j = 0;
+		while (j < data(GET)->width)
+		{
+			printf("%3d ", data(GET)->matrix[i][j]);
+			j++;
+		}
+		i++;
+		printf("\n");
 	}
 }
 
@@ -165,18 +220,20 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc != 2 || !init_check_file_extension(argv[1]))
 		return (1);
-	/*data(GET)->argv = argv;
+	data(GET)->argv = argv;
 	get_height();
 	data(GET)->matrix = (int **)ft_calloc(data(GET)->height, sizeof(int *));
 	if (!data(GET)->matrix)
 		panic(1);
-	get_width();*/
-	mlx = mlx_init();
+	get_width();
+	matrix_feed();
+	matrix_print();
+	/*mlx = mlx_init();
 	if (!mlx_new_window(mlx, 800, 500, "yo wtf"))
 		return (1);
 	while (1)
 	{
 
-	}
+	}*/
 	data(EXIT);
 }
