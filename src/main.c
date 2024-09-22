@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/22 13:48:10 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:50:03 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -113,6 +113,24 @@ void	draw_line(int x1, int y1, int x2, int y2)
 		steep_slope(dif_x, dif_y, x1, y1);
 	else
 		gentle_slope(dif_x, dif_y, x1, y1);
+}
+
+void	matrix_draw(void)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < data(GET)->height)
+	{
+		x = 0;
+		while (x < data(GET)->width)
+		{
+			draw_line(x, y, x + 1, y);
+			x++;
+		}
+		y++;
+	}
 }
 
 int	main(int argc, char **argv)

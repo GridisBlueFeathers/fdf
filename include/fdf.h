@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 23:55:51 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/22 13:26:52 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:50:23 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -45,9 +45,9 @@ void	img_init(void);
 
 typedef struct	s_data
 {
-	size_t	width;
-	size_t	height;
-	size_t	actual_height;
+	int	width;
+	int	height;
+	int	actual_height;
 	t_img	img;
 	void	*mlx;
 	void	*mlx_win;

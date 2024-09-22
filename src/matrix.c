@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:05:26 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/20 15:42:02 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:51:34 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -36,7 +36,7 @@ static void	matrix_get_height(void)
 
 static void	matrix_feed_line(char *line, int i)
 {
-	size_t	j;
+	int	j;
 
 	p_data(GET)->split_line = ft_split(line, ' ');
 	if (!p_data(GET)->split_line)
@@ -59,7 +59,7 @@ static void	matrix_feed_line(char *line, int i)
 
 static void	matrix_feed(void)
 {
-	size_t	i;
+	int	i;
 
 	p_data(GET)->fd = open(p_data(GET)->argv[1], O_RDONLY);
 	if (p_data(GET)->fd == -1)
@@ -76,7 +76,7 @@ static void	matrix_feed(void)
 			break ;
 		if (!data(GET)->width)
 			data(GET)->width = ft_count_words(p_data(GET)->line, ' ');
-		else if (ft_count_words(p_data(GET)->line, ' ') != data(GET)->width)
+		else if ((int)ft_count_words(p_data(GET)->line, ' ') != data(GET)->width)
 			panic(1);
 		matrix_feed_line(p_data(GET)->line, i);
 		ft_free(STR, &p_data(GET)->line);
