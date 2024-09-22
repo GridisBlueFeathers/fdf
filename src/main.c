@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/22 12:19:05 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:25:01 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -33,68 +33,60 @@ int	absolute_int(int nbr)
 	return (nbr);
 }
 
-typedef	struct	s_line
-{
-	int	x1;
-	int	y1;
-	int	x2;
-	int	y2;
-}	t_line;
-
-void	steep_slope(int	dif_x, int dif_y, t_line line)
+void	steep_slope(int	dif_x, int dif_y, int x, int y)
 {
 	int	des;
 	int	i;
 
 	i = 0;
 	des = 2 * absolute_int(dif_x) - absolute_int(dif_y);
-	img_pix_put(line.x1, line.y1);
+	img_pix_put(x, y);
 	while (i < absolute_int(dif_y))
 	{
 		if (dif_y > 0)
-			line.y1++;
+			y++;
 		else
-			line.y1--;
+			y--;
 		if (des < 0)
 			des = des + 2 * absolute_int(dif_x);
 		else
 		{
 			if (dif_x > 0)
-				line.x1++;
+				x++;
 			else
-				line.x1--;
+				x--;
 			des = des + 2 * absolute_int(dif_x) - 2 * absolute_int(dif_y);
 		}
-		img_pix_put(line.x1, line.y1);
+		img_pix_put(x, y);
 		i++;
 	}
 }
 
-void	gentle_slope(int dif_x, int dif_y, t_line line)
+void	gentle_slope(int dif_x, int dif_y, int x, int y)
 {
 	int	des;
 	int	i;
 
 	i = 0;
 	des = 2 * absolute_int(dif_y) - absolute_int(dif_x);
-	img_pix_put(line.x1, line.y1);
+	img_pix_put(x, y);
 	while (i < absolute_int(dif_x))
 	{
 		if (dif_x > 0)
-			line.x1++;
+			x++;
 		else
-			line.x1--;
+			x--;
 		if (des < 0)
 			des = des + 2 * absolute_int(dif_y);
 		else
 		{
 			if (dif_y > 0)
-				line.y1++;
+				y++;
 			else
-				line.y1--;
+				y--;
 			des = des + 2 * absolute_int(dif_y) - 2 * absolute_int(dif_x);
 		}
-		img_pix_put(line.x1, line.y1);
+		img_pix_put(x, y);
 		i++;
 	}
 }
@@ -104,14 +96,13 @@ void	draw_line(int x1, int y1, int x2, int y2)
 {
 	int	dif_x;
 	int dif_y;
-	t_line line = { .x1 = x1, .y1 = y1, .x2 = x2, .y2 = y2};
 
-	dif_x = line.x2 - line.x1;
-	dif_y = line.y2 - line.y1;
+	dif_x = x2 - x1;
+	dif_y = y2 - y1;
 	if (absolute_int(dif_x) < absolute_int(dif_y))
-		steep_slope(dif_x, dif_y, line);
+		steep_slope(dif_x, dif_y, x1, y1);
 	else
-		gentle_slope(dif_x, dif_y, line);
+		gentle_slope(dif_x, dif_y, x1, y1);
 }
 
 int	main(int argc, char **argv)
