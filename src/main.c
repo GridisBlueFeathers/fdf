@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/20 18:37:48 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 12:19:05 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -109,9 +109,9 @@ void	draw_line(int x1, int y1, int x2, int y2)
 	dif_x = line.x2 - line.x1;
 	dif_y = line.y2 - line.y1;
 	if (absolute_int(dif_x) < absolute_int(dif_y))
-		gentle_slope(dif_x, dif_y, line);
+		steep_slope(dif_x, dif_y, line);
 	else
-		steep_slope(dif_x, dif_x, line);
+		gentle_slope(dif_x, dif_y, line);
 }
 
 int	main(int argc, char **argv)
@@ -125,7 +125,7 @@ int	main(int argc, char **argv)
 	img_init();
 
 
-	draw_line(100, 100, 10, 230);
+	draw_line(100, 100, 100, 200);
 	mlx_put_image_to_window(data(GET)->mlx, data(GET)->mlx_win, data(GET)->img.img, 0, 0);
 
 	mlx_loop_hook(data(GET)->mlx, &hook_idle, NULL);
