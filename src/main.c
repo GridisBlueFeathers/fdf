@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/22 13:25:34 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:48:10 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -19,6 +19,8 @@ void	img_pix_put(int x, int y)
 {
 	char	*pixel;
 	
+	if (x < 0 || y < 0 || x > WIN_W || y > WIN_H)
+		return ;
 	pixel = data(GET)->img.addr + (y * data(GET)->img.line_len + x * (data(GET)->img.bpp / 8));
 	*(int *)pixel = 0xFFFFFF;
 }
@@ -91,11 +93,20 @@ void	gentle_slope(int dif_x, int dif_y, int x, int y)
 	}
 }
 
+void	line_init(int *x1, int *y1, int *x2, int *y2)
+{
+	*x1 *= 20;
+	*y1 *= 20;
+	*x2 *= 20;
+	*y2 *= 20;
+}
+
 void	draw_line(int x1, int y1, int x2, int y2)
 {
 	int	dif_x;
 	int dif_y;
 
+	line_init(&x1, &y1, &x2, &y2);
 	dif_x = x2 - x1;
 	dif_y = y2 - y1;
 	if (absolute_int(dif_x) < absolute_int(dif_y))
@@ -115,7 +126,7 @@ int	main(int argc, char **argv)
 	img_init();
 
 
-	draw_line(100, 100, 100, 200);
+	draw_line(10, 10, 37, 88);
 	mlx_put_image_to_window(data(GET)->mlx, data(GET)->mlx_win, data(GET)->img.img, 0, 0);
 
 	mlx_loop_hook(data(GET)->mlx, &hook_idle, NULL);
