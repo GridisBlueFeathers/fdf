@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 23:55:51 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/20 18:37:59 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:26:52 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -21,6 +21,9 @@
 
 # define INV_EXT "fdf: Invalid file extention"
 # define INV_MAP "fdf: Invalid map"
+
+# define WIN_W 1600
+# define WIN_H 1200
 
 typedef	enum	e_option
 {

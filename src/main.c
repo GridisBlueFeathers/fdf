@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/22 13:25:01 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:25:34 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -90,7 +90,6 @@ void	gentle_slope(int dif_x, int dif_y, int x, int y)
 		i++;
 	}
 }
-
 
 void	draw_line(int x1, int y1, int x2, int y2)
 {
