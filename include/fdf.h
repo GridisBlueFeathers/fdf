@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 23:55:51 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/22 13:50:23 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 16:31:55 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -15,6 +15,7 @@
 # include <mlx.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <mlx.h>
 # include "libft/libft.h"
 # include "libft/get_next_line.h"
 # include "libft/ft_printf.h"
@@ -22,8 +23,8 @@
 # define INV_EXT "fdf: Invalid file extention"
 # define INV_MAP "fdf: Invalid map"
 
-# define WIN_W 1600
-# define WIN_H 1200
+# define WIN_W 1200
+# define WIN_H 900
 
 typedef	enum	e_option
 {
@@ -32,14 +33,14 @@ typedef	enum	e_option
 	EXIT,
 }	t_option;
 
-typedef	struct	s_img
+typedef	struct	s_image
 {
 	void	*img;
 	char	*addr;
 	int		bpp;
 	int		line_len;
 	int		endian;
-}	t_img;
+}	t_image;
 
 void	img_init(void);
 
@@ -48,7 +49,7 @@ typedef struct	s_data
 	int	width;
 	int	height;
 	int	actual_height;
-	t_img	img;
+	t_image	img;
 	void	*mlx;
 	void	*mlx_win;
 	int		**matrix;

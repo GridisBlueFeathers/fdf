@@ -6,10 +6,11 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/22 13:50:03 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 15:45:11 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
+#include <math.h>
 #include "fdf.h"
 #include "dev.h"
 #include "libft/ft_printf.h"
@@ -93,20 +94,39 @@ void	gentle_slope(int dif_x, int dif_y, int x, int y)
 	}
 }
 
-void	line_init(int *x1, int *y1, int *x2, int *y2)
+void	isometric(float *x, float *y, int z)
 {
-	*x1 *= 20;
-	*y1 *= 20;
-	*x2 *= 20;
-	*y2 *= 20;
+	int	x_cpy;
+	int	y_cpy;
+
+	x_cpy = *x;
+	y_cpy = *y;
+	*x = (x_cpy - y_cpy) * cos(0.523599);
+	*y = (x_cpy + y_cpy) * sin(0.523599) - z;
 }
 
-void	draw_line(int x1, int y1, int x2, int y2)
+void	line_init(float *x1, float *y1, float *x2, float *y2)
+{
+	isometric(x1, y1, data(GET)->matrix[(int)*y1][(int)*x1]);
+	isometric(x2, y2, data(GET)->matrix[(int)*y2][(int)*x2]);
+	*x1 *= 10;
+	*y1 *= 10;
+	*x2 *= 10;
+	*y2 *= 10;
+	*x1 += WIN_W / 2;
+	*y1 += WIN_H / 2;
+	*x2 += WIN_W / 2;
+	*y2 += WIN_H / 2;
+}
+
+void	draw_line(float x1, float y1, float x2, float y2)
 {
 	int	dif_x;
 	int dif_y;
 
 	line_init(&x1, &y1, &x2, &y2);
+	img_pix_put(x1, y1);
+	img_pix_put(x2, y2);
 	dif_x = x2 - x1;
 	dif_y = y2 - y1;
 	if (absolute_int(dif_x) < absolute_int(dif_y))
@@ -126,7 +146,10 @@ void	matrix_draw(void)
 		x = 0;
 		while (x < data(GET)->width)
 		{
-			draw_line(x, y, x + 1, y);
+			if (x < data(GET)->width - 1)
+				draw_line(x, y, x + 1, y);
+			if (y < data(GET)->height - 1)
+				draw_line(x, y, x, y + 1);
 			x++;
 		}
 		y++;
@@ -144,7 +167,7 @@ int	main(int argc, char **argv)
 	img_init();
 
 
-	draw_line(10, 10, 37, 88);
+	matrix_draw();
 	mlx_put_image_to_window(data(GET)->mlx, data(GET)->mlx_win, data(GET)->img.img, 0, 0);
 
 	mlx_loop_hook(data(GET)->mlx, &hook_idle, NULL);

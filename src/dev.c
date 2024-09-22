@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:10:00 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/20 15:42:11 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:17:34 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -14,8 +14,8 @@
 
 void	dev_matrix_print(void)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < data(GET)->actual_height)
