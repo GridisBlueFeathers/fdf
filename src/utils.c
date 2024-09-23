@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/15 14:23:56 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/23 15:09:52 by svereten         ###   ########.fr       */
+/*   Created: 2024/09/23 10:03:43 by svereten          #+#    #+#             */
+/*   Updated: 2024/09/23 15:16:18 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
 
-int	main(int argc, char **argv)
+int	absolute_int(int nbr)
 {
-	if (argc != 2 || !init_check_file_extension(argv[1]))
-		return (1);
-	data(GET);
-	p_data(GET)->argv = argv;
-	matrix_process();
-	fdf_mlx_init();
-	img_init();
-	matrix_draw();
-	fdf_mlx_run();
-	p_data(FREE);
-	data(EXIT);
+	if (nbr < 0)
+		nbr = -nbr;
+	if (nbr < 0)
+		panic_msg(1, "fdf: value overflew during absolute conversion\n");
+	return (nbr);
+}
+
+void	closer(int fd)
+{
+	if (fd >= 0 && close(fd) == -1)
+		panic(1);
 }

@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 00:03:27 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/20 14:46:23 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:17:14 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -24,7 +24,7 @@ static t_p_data	*p_data_init(void)
 static void	p_data_free(t_p_data *data)
 {
 	get_next_line(data->fd, NULL);
-	close(data->fd);
+	closer(data->fd);
 	if (data->split_line)
 		ft_free(STR_ARR, &data->split_line);
 	if (data->line)

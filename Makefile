@@ -6,7 +6,7 @@
 #    By: svereten <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 14:15:06 by svereten          #+#    #+#              #
-#    Updated: 2024/09/22 22:07:22 by svereten         ###   ########.fr        #
+#    Updated: 2024/09/23 15:34:43 by svereten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = fdf
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Werror -Wextra
 
 INCLUDE = -I./include -I./libft/include
 
-LIBFT = ./libft/libft.a ./minilibx-linux/libmlx.a
+LIBFT = ./libft/libft.a
 MLX = ./minilibx-linux/libmlx.a
 
 LIBFT_DIR = libft
@@ -35,6 +35,8 @@ FILES = main \
 		fdf_mlx \
 		hooks \
 		img \
+		line \
+		utils \
 
 SRCS = ${FILES:%=${SRC_DIR}/%.c}
 OBJS = ${FILES:%=${OBJ_DIR}/%.o}
@@ -63,11 +65,11 @@ ${OBJ_DIRS}:
 ${DEV_NAME}: ${DEV_OBJS} ${LIBFT} ${MLX}
 	${CC} ${CFLAGS} ${DEV_FLAGS} ${LIBFT} ${MLXFLAGS} ${INCLUDE} $^ -o $@
 
-valgrind: all
+valgrind: re
 	$@ --show-leak-kinds=all --leak-check=full ./fdf test_maps/42.fdf
 
-funcheck: all
-	$@ -a --test-functions="malloc" ./fdf test_maps/42.fdf
+funcheck: re
+	$@ -a ./fdf test_maps/42.fdf
 
 print:
 	echo ${DEV_OBJS}
@@ -87,6 +89,6 @@ fclean: clean
 re: fclean all
 
 norm:
-	norminette ${SRCS}
+	norminette ${SRCS} ./include/fdf.h
 
 .PHONY: all clean fclean re norm
