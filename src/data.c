@@ -6,12 +6,11 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:03:52 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/22 16:31:43 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 19:50:51 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
 #include <mlx.h>
-#include <mlx_int.h>
 
 static t_data	*data_init(void)
 {
@@ -37,8 +36,6 @@ static void	data_free(t_data *data)
 		i++;
 	}
 	free(data->matrix);
-	if (data->img.img)
-		free(data->img.img);
 	free(data->mlx);
 	free(data);
 }

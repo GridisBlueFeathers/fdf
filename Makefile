@@ -6,7 +6,7 @@
 #    By: svereten <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 14:15:06 by svereten          #+#    #+#              #
-#    Updated: 2024/09/20 18:39:00 by svereten         ###   ########.fr        #
+#    Updated: 2024/09/22 22:07:22 by svereten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = fdf
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Werror -Wextra
 
 INCLUDE = -I./include -I./libft/include
 
-LIBFT = ./libft/libft.a
+LIBFT = ./libft/libft.a ./minilibx-linux/libmlx.a
 MLX = ./minilibx-linux/libmlx.a
 
 LIBFT_DIR = libft
@@ -57,14 +57,17 @@ ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c | ${OBJ_DIRS}
 ${LIBFT}:
 	${MAKE} -C ${LIBFT_DIR}
 
-${MLX}:
-	${MAKE} -C ${LIBFT_DIR}
-
 ${OBJ_DIRS}:
 	mkdir -p $@
 
 ${DEV_NAME}: ${DEV_OBJS} ${LIBFT} ${MLX}
 	${CC} ${CFLAGS} ${DEV_FLAGS} ${LIBFT} ${MLXFLAGS} ${INCLUDE} $^ -o $@
+
+valgrind: all
+	$@ --show-leak-kinds=all --leak-check=full ./fdf test_maps/42.fdf
+
+funcheck: all
+	$@ -a --test-functions="malloc" ./fdf test_maps/42.fdf
 
 print:
 	echo ${DEV_OBJS}

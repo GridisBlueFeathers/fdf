@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:05:26 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/22 13:51:34 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 21:42:20 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -50,6 +50,8 @@ static void	matrix_feed_line(char *line, int i)
 	{
 		if (j < data(GET)->width)
 			data(GET)->matrix[i][j] = ft_atoi(p_data(GET)->split_line[j]);
+		if (data(GET)->matrix[i][j] > data(GET)->biggest_z)
+			data(GET)->biggest_z = data(GET)->matrix[i][j];
 		j++;
 	}
 	if (j != data(GET)->width)
@@ -77,7 +79,7 @@ static void	matrix_feed(void)
 		if (!data(GET)->width)
 			data(GET)->width = ft_count_words(p_data(GET)->line, ' ');
 		else if ((int)ft_count_words(p_data(GET)->line, ' ') != data(GET)->width)
-			panic(1);
+			panic_msg(1, "fdf: map is not rectangular\n");
 		matrix_feed_line(p_data(GET)->line, i);
 		ft_free(STR, &p_data(GET)->line);
 		i++;

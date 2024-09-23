@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 23:55:51 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/22 16:31:55 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/22 22:44:09 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -26,6 +26,8 @@
 # define WIN_W 1200
 # define WIN_H 900
 
+# define ZOOM 2
+
 typedef	enum	e_option
 {
 	GET,
@@ -33,23 +35,25 @@ typedef	enum	e_option
 	EXIT,
 }	t_option;
 
-typedef	struct	s_image
+typedef	struct	s_img
 {
 	void	*img;
 	char	*addr;
 	int		bpp;
 	int		line_len;
 	int		endian;
-}	t_image;
+}	t_img;
 
 void	img_init(void);
 
 typedef struct	s_data
 {
-	int	width;
-	int	height;
-	int	actual_height;
-	t_image	img;
+	int		width;
+	int		height;
+	int		actual_height;
+	int		biggest_z;
+	int		zoom;
+	t_img	img;
 	void	*mlx;
 	void	*mlx_win;
 	int		**matrix;
