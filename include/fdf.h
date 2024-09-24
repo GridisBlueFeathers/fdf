@@ -6,14 +6,13 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 23:55:51 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/23 15:17:06 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:20:40 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
 # define FDF_H
 
 # include <mlx.h>
-# include <stdio.h>
 # include <fcntl.h>
 # include <mlx.h>
 # include <math.h>
@@ -54,13 +53,11 @@ typedef struct s_data
 	int		width;
 	int		height;
 	int		actual_height;
-	int		biggest_z;
 	int		zoom;
 	t_img	*img;
 	void	*mlx;
 	void	*mlx_win;
 	int		**matrix;
-	int		**color;
 }	t_data;
 
 t_data		*data(t_option op);
