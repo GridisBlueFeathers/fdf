@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:04:47 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/23 15:06:32 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/24 09:58:24 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -90,7 +90,7 @@ static void	line_init(float *x1, float *y1, float *x2, float *y2)
 	*y2 *= data(GET)->zoom;
 	*x1 += WIN_W / 2;
 	*x2 += WIN_W / 2;
-	if (data(GET)->zoom > 2)
+	if (data(GET)->height < 25 || data(GET)->width < 25)
 	{
 		*y1 += WIN_H / 2;
 		*y2 += WIN_H / 2;
