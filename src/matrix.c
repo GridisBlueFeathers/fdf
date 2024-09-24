@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:05:26 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/24 09:46:58 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/24 10:47:17 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -95,8 +95,6 @@ void	matrix_process(void)
 		panic(1);
 	matrix_feed();
 	data(GET)->zoom = 15;
-	printf("%d\n", data(GET)->height);
-	printf("%d\n", data(GET)->width);
 	if (data(GET)->height >= 150 || data(GET)->width >= 150)
 		data(GET)->zoom = 2;
 }
