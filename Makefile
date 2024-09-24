@@ -6,7 +6,7 @@
 #    By: svereten <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 14:15:06 by svereten          #+#    #+#              #
-#    Updated: 2024/09/24 11:21:34 by svereten         ###   ########.fr        #
+#    Updated: 2024/09/24 12:04:54 by svereten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = fdf
@@ -60,7 +60,7 @@ ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c | ${OBJ_DIRS}
 	${CC} ${CFLAGS} ${INCLUDE} -c $< -o $@
 
 ${LIBFT}:
-	${MAKE} -C ${LIBFT_DIR} GNL_SIZE="-D BUFFER_SIZE=4096"
+	${MAKE} -C ${LIBFT_DIR} GNL_SIZE="-D BUFFER_SIZE=4095"
 
 ${OBJ_DIRS}:
 	mkdir -p $@
@@ -74,8 +74,10 @@ run: re
 valgrind: re
 	$@ --show-leak-kinds=all --leak-check=full ./fdf ${MAP}
 
+FFLAG ?=
+
 funcheck: re
-	$@ -a ./fdf ${MAP}
+	$@ -a ${FFLAG} ./fdf ${MAP}
 
 print:
 	echo ${DEV_OBJS}
