@@ -6,7 +6,7 @@
 /*   By: svereten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:05:26 by svereten          #+#    #+#             */
-/*   Updated: 2024/09/24 09:46:58 by svereten         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:46:32 by svereten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fdf.h"
@@ -14,13 +14,15 @@
 static void	matrix_get_height(void)
 {
 	int		fd;
+	int		check;
 	char	*line;
 
 	fd = open(p_data(GET)->argv[1], O_RDONLY);
 	if (fd == -1)
 		panic(1);
-	line = "";
-	while (line)
+	line = NULL;
+	check = 1;
+	while (check)
 	{
 		if (!get_next_line(fd, &line))
 		{
@@ -29,6 +31,8 @@ static void	matrix_get_height(void)
 		}
 		if (line)
 			data(GET)->height++;
+		else
+			check = 0;
 		free(line);
 	}
 	closer(fd);
@@ -95,8 +99,6 @@ void	matrix_process(void)
 		panic(1);
 	matrix_feed();
 	data(GET)->zoom = 15;
-	printf("%d\n", data(GET)->height);
-	printf("%d\n", data(GET)->width);
 	if (data(GET)->height >= 150 || data(GET)->width >= 150)
 		data(GET)->zoom = 2;
 }

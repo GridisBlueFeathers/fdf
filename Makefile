@@ -6,17 +6,18 @@
 #    By: svereten <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 14:15:06 by svereten          #+#    #+#              #
-#    Updated: 2024/09/23 15:34:43 by svereten         ###   ########.fr        #
+#    Updated: 2024/09/24 12:04:54 by svereten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = fdf
 
 CC = cc
 
-MLXFLAGS = -lmlx -lXext -lX11 -lm
-CFLAGS = -Wall -Werror -Wextra 
+CFLAGS = -Wall -Werror -Wextra
 
 INCLUDE = -I./include -I./libft/include
+LDLIBS = -lmlx -lXext -lX11 -lm -lft 
+LDFLAGS = -L./libft/
 
 LIBFT = ./libft/libft.a
 MLX = ./minilibx-linux/libmlx.a
@@ -48,16 +49,18 @@ CFLAGS += -g
 DEV_FILES = dev
 DEV_OBJS = ${OBJS} ${DEV_FILES:%=${OBJ_DIR}/%.o}
 
+MAP ?= test_maps/42.fdf
+
 all: ${NAME}
 
-${NAME}: ${OBJS} ${LIBFT}
-	${CC} ${CFLAGS} ${MLXFLAGS} ${INCLUDE} $^ -o $@
+${NAME}: ${OBJS} | ${LIBFT}
+	${CC} ${CFLAGS} ${INCLUDE} ${OBJS} -o $@ ${LDLIBS} ${LDFLAGS}
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c | ${OBJ_DIRS}
 	${CC} ${CFLAGS} ${INCLUDE} -c $< -o $@
 
 ${LIBFT}:
-	${MAKE} -C ${LIBFT_DIR}
+	${MAKE} -C ${LIBFT_DIR} GNL_SIZE="-D BUFFER_SIZE=4095"
 
 ${OBJ_DIRS}:
 	mkdir -p $@
@@ -65,11 +68,16 @@ ${OBJ_DIRS}:
 ${DEV_NAME}: ${DEV_OBJS} ${LIBFT} ${MLX}
 	${CC} ${CFLAGS} ${DEV_FLAGS} ${LIBFT} ${MLXFLAGS} ${INCLUDE} $^ -o $@
 
+run: re
+	./${NAME} ${MAP}
+
 valgrind: re
-	$@ --show-leak-kinds=all --leak-check=full ./fdf test_maps/42.fdf
+	$@ --show-leak-kinds=all --leak-check=full ./fdf ${MAP}
+
+FFLAG ?=
 
 funcheck: re
-	$@ -a ./fdf test_maps/42.fdf
+	$@ -a ${FFLAG} ./fdf ${MAP}
 
 print:
 	echo ${DEV_OBJS}
