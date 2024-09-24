@@ -6,7 +6,7 @@
 #    By: svereten <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 14:15:06 by svereten          #+#    #+#              #
-#    Updated: 2024/09/24 10:51:19 by svereten         ###   ########.fr        #
+#    Updated: 2024/09/24 11:21:34 by svereten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = fdf
@@ -49,6 +49,8 @@ CFLAGS += -g
 DEV_FILES = dev
 DEV_OBJS = ${OBJS} ${DEV_FILES:%=${OBJ_DIR}/%.o}
 
+MAP ?= test_maps/42.fdf
+
 all: ${NAME}
 
 ${NAME}: ${OBJS} | ${LIBFT}
@@ -58,7 +60,7 @@ ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c | ${OBJ_DIRS}
 	${CC} ${CFLAGS} ${INCLUDE} -c $< -o $@
 
 ${LIBFT}:
-	${MAKE} -C ${LIBFT_DIR}
+	${MAKE} -C ${LIBFT_DIR} GNL_SIZE="-D BUFFER_SIZE=4096"
 
 ${OBJ_DIRS}:
 	mkdir -p $@
@@ -66,11 +68,14 @@ ${OBJ_DIRS}:
 ${DEV_NAME}: ${DEV_OBJS} ${LIBFT} ${MLX}
 	${CC} ${CFLAGS} ${DEV_FLAGS} ${LIBFT} ${MLXFLAGS} ${INCLUDE} $^ -o $@
 
+run: re
+	./${NAME} ${MAP}
+
 valgrind: re
-	$@ --show-leak-kinds=all --leak-check=full ./fdf test_maps/42.fdf
+	$@ --show-leak-kinds=all --leak-check=full ./fdf ${MAP}
 
 funcheck: re
-	$@ -a ./fdf test_maps/42.fdf
+	$@ -a ./fdf ${MAP}
 
 print:
 	echo ${DEV_OBJS}
